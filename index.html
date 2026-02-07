@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 50px rgba(138, 43, 226, 0.3);
+            border: 1px solid #333;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #333;
+        }
+
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #8a2be2;
+            object-fit: cover;
+        }
+
+        .edit-img-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #8a2be2;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid #1a1a1a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .edit-img-btn:hover {
+            background: #9d4edd;
+            transform: scale(1.1);
+        }
+
+        .username-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .username {
+            font-size: 2em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .edit-btn {
+            background: transparent;
+            border: none;
+            color: #8a2be2;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+
+        .edit-btn:hover {
+            color: #9d4edd;
+            transform: scale(1.2);
+        }
+
+        .bio {
+            color: #aaa;
+            font-size: 1em;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .badges-section {
+            margin-bottom: 30px;
+        }
+
+        .badges-section h2 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #8a2be2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            cursor: default;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .badge.verified {
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+        }
+
+        .badge.certified {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .badge.premium {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+        }
+
+        .badge.developer {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .badge.staff {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .badge.partner {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .info-section {
+            background: #0f0f0f;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .info-item:hover {
+            background: #222;
+            transform: translateX(5px);
+        }
+
+        .info-item i {
+            color: #8a2be2;
+            font-size: 1.3em;
+            width: 25px;
+        }
+
+        .info-item span {
+            color: #aaa;
+            flex: 1;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .social-link {
+            background: #0f0f0f;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border: 1px solid #333;
+        }
+
+        .social-link:hover {
+            background: #8a2be2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .social-link i {
+            font-size: 1.5em;
+        }
+
+        /* Modal pour édition */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #333;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #8a2be2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #0f0f0f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .btn-save {
+            background: #8a2be2;
+            color: #fff;
+        }
+
+        .btn-save:hover {
+            background: #9d4edd;
+        }
+
+        .btn-cancel {
+            background: #333;
+            color: #fff;
+        }
+
+        .btn-cancel:hover {
+            background: #444;
+        }
+
+        .add-badge-btn {
+            background: #8a2be2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .add-badge-btn:hover {
+            background: #9d4edd;
+            transform: translateY(-2px);
+        }
+
+        .badge-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .badge-option {
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .badge-option:hover {
+            border-color: #8a2be2;
+        }
+
+        .badge-option.selected {
+            border-color: #8a2be2;
+            background: rgba(138, 43, 226, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .username {
+                font-size: 1.5em;
+            }
+
+            .social-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Section Profil -->
+        <div class="profile-section">
+            <div class="profile-img-container">
+                <img src="https://via.placeholder.com/120" alt="Photo de profil" class="profile-img" id="profileImg">
+                <div class="edit-img-btn" onclick="changeProfilePic()">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            
+            <div class="username-container">
+                <h1 class="username" id="username">TonPseudo</h1>
+                <button class="edit-btn" onclick="openEditModal()">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+            
+            <p class="bio" id="bio">Développeur passionné | Créateur de bots Discord | 🎮 Gamer</p>
+        </div>
+
+        <!-- Section Badges -->
+        <div class="badges-section">
+            <h2>
+                <i class="fas fa-award"></i>
+                Badges
+                <button class="edit-btn" onclick="openBadgeModal()" style="margin-left: auto;">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </h2>
+            <div class="badges-container" id="badgesContainer">
+                <div class="badge verified">
+                    <i class="fas fa-check-circle"></i>
+                    Certifié
+                </div>
+                <div class="badge developer">
+                    <i class="fas fa-code"></i>
+                    Développeur
+                </div>
+                <div class="badge premium">
+                    <i class="fas fa-crown"></i>
+                    Premium
+                </div>
+            </div>
+        </div>
+
+        <!-- Informations -->
+        <div class="info-section">
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span id="location">France 🇫🇷</span>
+                <button class="edit-btn" onclick="editField('location')">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+            
+            <div class="info-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span id="age">18 ans</span>
+                <button class="edit-btn" onclick="editField('age')">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+            
+            <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span id="job">Développeur Discord.js</span>
+                <button class="edit-btn" onclick="editField('job')">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Liens Sociaux -->
+        <div class="social-links">
+            <a href="#" class="social-link" id="discordLink">
+                <i class="fab fa-discord"></i>
+                <span>Discord</span>
+            </a>
+            <a href="#" class="social-link" id="githubLink">
+                <i class="fab fa-github"></i>
+                <span>GitHub</span>
+            </a>
+            <a href="#" class="social-link" id="twitterLink">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            <a href="#" class="social-link" id="youtubeLink">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal d'édition profil -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h3>Modifier le profil</h3>
+            <div class="form-group">
+                <label>Nom d'utilisateur</label>
+                <input type="text" id="editUsername" placeholder="TonPseudo">
+            </div>
+            <div class="form-group">
+                <label>Bio</label>
+                <textarea id="editBio" placeholder="Parle de toi..."></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-save" onclick="saveProfile()">Enregistrer</button>
+                <button class="btn btn-cancel" onclick="closeEditModal()">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal d'ajout de badges -->
+    <div class="modal" id="badgeModal">
+        <div class="modal-content">
+            <h3>Ajouter un badge</h3>
+            <div class="badge-selector" id="badgeSelector">
+                <div class="badge-option verified" onclick="selectBadge('verified')">
+                    <i class="fas fa-check-circle"></i>
+                    <div>Certifié</div>
+                </div>
+                <div class="badge-option developer" onclick="selectBadge('developer')">
+                    <i class="fas fa-code"></i>
+                    <div>Développeur</div>
+                </div>
+                <div class="badge-option premium" onclick="selectBadge('premium')">
+                    <i class="fas fa-crown"></i>
+                    <div>Premium</div>
+                </div>
+                <div class="badge-option staff" onclick="selectBadge('staff')">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>Staff</div>
+                </div>
+                <div class="badge-option partner" onclick="selectBadge('partner')">
+                    <i class="fas fa-handshake"></i>
+                    <div>Partenaire</div>
+                </div>
+                <div class="badge-option certified" onclick="selectBadge('certified')">
+                    <i class="fas fa-certificate"></i>
+                    <div>Certifié Pro</div>
+                </div>
+            </div>
+            <div class="modal-buttons" style="margin-top: 20px;">
+                <button class="btn btn-save" onclick="addSelectedBadge()">Ajouter</button>
+                <button class="btn btn-cancel" onclick="closeBadgeModal()">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedBadge = null;
+        const badges = {
+            verified: { icon: 'fa-check-circle', text: 'Certifié' },
+            developer: { icon: 'fa-code', text: 'Développeur' },
+            premium: { icon: 'fa-crown', text: 'Premium' },
+            staff: { icon: 'fa-shield-alt', text: 'Staff' },
+            partner: { icon: 'fa-handshake', text: 'Partenaire' },
+            certified: { icon: 'fa-certificate', text: 'Certifié Pro' }
+        };
+
+        // Ouvrir/Fermer modals
+        function openEditModal() {
+            document.getElementById('editUsername').value = document.getElementById('username').textContent;
+            document.getElementById('editBio').value = document.getElementById('bio').textContent;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        function openBadgeModal() {
+            document.getElementById('badgeModal').classList.add('active');
+        }
+
+        function closeBadgeModal() {
+            document.getElementById('badgeModal').classList.remove('active');
+            selectedBadge = null;
+            document.querySelectorAll('.badge-option').forEach(opt => opt.classList.remove('selected'));
+        }
+
+        // Sauvegarder profil
+        function saveProfile() {
+            document.getElementById('username').textContent = document.getElementById('editUsername').value;
+            document.getElementById('bio').textContent = document.getElementById('editBio').value;
+            closeEditModal();
+            
+            // Sauvegarder dans localStorage
+            localStorage.setItem('username', document.getElementById('editUsername').value);
+            localStorage.setItem('bio', document.getElementById('editBio').value);
+        }
+
+        // Changer photo de profil
+        function changeProfilePic() {
+            const url = prompt('Entre l\'URL de ta nouvelle photo de profil:');
+            if (url) {
+                document.getElementById('profileImg').src = url;
+                localStorage.setItem('profileImg', url);
+            }
+        }
+
+        // Éditer un champ
+        function editField(field) {
+            const newValue = prompt(`Nouvelle valeur pour ${field}:`);
+            if (newValue) {
+                document.getElementById(field).textContent = newValue;
+                localStorage.setItem(field, newValue);
+            }
+        }
+
+        // Gestion des badges
+        function selectBadge(badgeType) {
+            document.querySelectorAll('.badge-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.closest('.badge-option').classList.add('selected');
+            selectedBadge = badgeType;
+        }
+
+        function addSelectedBadge() {
+            if (!selectedBadge) {
+                alert('Sélectionne un badge d\'abord !');
+                return;
+            }
+
+            const badgeData = badges[selectedBadge];
+            const badgeHTML = `
+                <div class="badge ${selectedBadge}">
+                    <i class="fas ${badgeData.icon}"></i>
+                    ${badgeData.text}
+                </div>
+            `;
+            
+            document.getElementById('badgesContainer').insertAdjacentHTML('beforeend', badgeHTML);
+            closeBadgeModal();
+        }
+
+        // Charger les données sauvegardées
+        window.onload = function() {
+            if (localStorage.getItem('username')) {
+                document.getElementById('username').textContent = localStorage.getItem('username');
+            }
+            if (localStorage.getItem('bio')) {
+                document.getElementById('bio').textContent = localStorage.getItem('bio');
+            }
+            if (localStorage.getItem('profileImg')) {
+                document.getElementById('profileImg').src = localStorage.getItem('profileImg');
+            }
+            if (localStorage.getItem('location')) {
+                document.getElementById('location').textContent = localStorage.getItem('location');
+            }
+            if (localStorage.getItem('age')) {
+                document.getElementById('age').textContent = localStorage.getItem('age');
+            }
+            if (localStorage.getItem('job')) {
+                document.getElementById('job').textContent = localStorage.getItem('job');
+            }
+        };
+
+        // Fermer modal en cliquant en dehors
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        };
+    </script>
+</body>
+</html>
